@@ -1,0 +1,14 @@
+{
+  "name": "claude-code-orchestrator",
+  "version": "1.0.0",
+  "description": "Vanilla/orchestrator session modes for Claude Code, with a verify-before-accept multi-agent protocol.",
+  "private": true,
+  "type": "module",
+  "license": "MIT",
+  "engines": {
+    "node": ">=20"
+  },
+  "scripts": {
+    "test": "node --test"
+  }
+}
