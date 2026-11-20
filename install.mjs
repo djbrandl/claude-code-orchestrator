@@ -117,6 +117,7 @@ function saveSettings(original, settings) {
 
 function install() {
   // Validate everything before writing anything.
+  const hadSettingsFile = existsSync(settingsFile);
   const settings = readSettings();
   const original = JSON.stringify(settings);
   const manifest = readManifest();
@@ -166,7 +167,8 @@ function install() {
   const updated = plan.filter((p) => p.action !== "same").length;
   console.log(`claude-code-orchestrator ${version} installed into ${slash(configDir)}`);
   console.log(`  files: ${updated} written, ${plan.length - updated} already current`);
-  console.log("  settings.json: " + (!wroteSettings ? "hooks already current" : `hooks ${hadHooks ? "updated" : "added"} (previous version saved as settings.json.bak)`));
+  const backupNote = hadSettingsFile ? " (previous version saved as settings.json.bak)" : " (new file)";
+  console.log("  settings.json: " + (!wroteSettings ? "hooks already current" : `hooks ${hadHooks ? "updated" : "added"}${backupNote}`));
   const nodeCheck = spawnSync("node", ["--version"], { encoding: "utf8" });
   if (nodeCheck.status !== 0) {
     console.log("warning: `node` is not on this shell's PATH. The hooks run `node`, so make sure Claude Code's environment can find it.");
